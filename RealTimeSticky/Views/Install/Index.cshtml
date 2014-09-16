@@ -1,0 +1,130 @@
+﻿@using RealTimeSticky
+@using System.Web.Mvc.Html
+@model RealTimeSticky.Models.InstallModel
+@{
+    ViewBag.Title = "Install RealTimeSticky";
+}
+@section MetaContent
+{    
+}
+<form action="@Url.Content("~/Install/Index")" method="post" enctype="multipart/form-data" class="form-horizontal" id="installForm">
+    <div class="row">
+        <h2>Welcome to RealTimeSticky installation</h2>
+    </div>
+    <div class="row">
+        <div class="panel-group">  
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Database info
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SqlServerCreateDatabase, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-4">
+                            <div class="switch" data-on="primary" data-off="danger" data-on-label="Yes" data-off-label="No">
+                                @Html.EditorFor(model => model.SqlServerCreateDatabase)
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.ValidationMessageFor(model => model.SqlServerCreateDatabase)
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group">
+                            <label for="SqlServerName" class="col-sm-3 control-label">SQL Server name:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.SqlServerName, new { @class="form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="SqlDatabaseName" class="col-sm-3 control-label">Database name:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.SqlDatabaseName, new { @class="form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.RadioButton("SqlAuthenticationType", "windowsauthentication", (Model.SqlAuthenticationType == "windowsauthentication"), new { id = "sqlauthenticationtype_windows", name = "sqlauthenticationtype_windows", @class = "pull-left" })
+                            <label class="pull-left">&nbsp;&nbsp;</label>
+                            <label for="sqlauthenticationtype_windows" class="pull-left">Use integrated Windows authentication</label>
+                        </div>
+                        <div class="form-group">
+                            @Html.RadioButton("SqlAuthenticationType", "sqlauthentication", (Model.SqlAuthenticationType == "sqlauthentication"), new { id = "sqlauthenticationtype_sql", name = "sqlauthenticationtype_sql", @class = "pull-left" })
+                            <label class="pull-left">&nbsp;&nbsp;</label>
+                            <label for="sqlauthenticationtype_sql" class="pull-left">Use SQL Server account</label>
+                        </div>
+                        <div id="pnlSqlServer">
+                            <div class="form-group">
+                                <label for="SqlServerUsername" class="col-sm-3 control-label">SQL Username:</label>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(x => x.SqlServerUsername, new { @class="form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="SqlServerPassword" class="col-sm-3 control-label">SQL Password:</label>
+                                <div class="col-sm-4">
+                                    @Html.PasswordFor(x => x.SqlServerPassword, new { @autocomplete = "off",  @class="form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="SqlServerConfirmPassword" class="col-sm-3 control-label">SQL Password Confirm:</label>
+                                <div class="col-sm-4">
+                                    @Html.PasswordFor(x => x.SqlServerConfirmPassword, new { @autocomplete = "off", @class="form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="well">
+            <input class="btn btn-primary btn-lg" type="submit" value="Install" />
+        </div>
+        <div id="waitModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Installing RealTimeSticky</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Please wait...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section NavContent
+{
+}
+@section Scripts
+{    
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $('input:radio[name=SqlAuthenticationType]').click(toggleSqlAuthenticationType);
+            toggleSqlAuthenticationType();
+
+            $('#installForm').submit(function ()
+            {
+                $('#waitModal').modal("show");
+            });
+        });
+
+        function toggleSqlAuthenticationType()
+        {
+            var selectedProvider = $("input[name=SqlAuthenticationType]:checked").attr('id');
+            if (selectedProvider == 'sqlauthenticationtype_sql')
+            {
+                $('#pnlSqlServer').show();
+            }
+            else if (selectedProvider == 'sqlauthenticationtype_windows')
+            {
+                $('#pnlSqlServer').hide();
+            }
+        }
+    </script>
+}

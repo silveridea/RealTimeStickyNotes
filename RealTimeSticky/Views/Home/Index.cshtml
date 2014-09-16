@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html ng-app="realTimeStickyApp">
+<head>
+    <meta name="description" content="AngularJS + jQuery UI Drag-n-Drop" />
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>RealTime Sticky Notes</title>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.1.1.min.js"></script>
+    <script src="@Url.Content("~/signalr/hubs")"></script>
+    <script src="@Url.Content("~/Scripts/RealTimeSticky.1.0.js")"></script>
+
+    <link href="http://code.jquery.com/ui/1.11.0/themes/cupertino/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/site.css")" rel="stylesheet" type="text/css" />
+</head>
+<body ng-controller="stickyController" ng-cloak>
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse">
+                <button type="button" class="btn btn-default navbar-btn" ng-click="addNewNote();"><span class="glyphicon glyphicon-plus"></span> Add Note</button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mainContainer">
+        <div class="row col-xs-12">
+            <div class="movableBox panel {{SelectedIndex==$index ? 'panel-primary' : 'panel-default'}}" ng-repeat="item in getNotes()" data-index="{{$index}}" draggable ng-style="{ left : item.Left+'px', top : item.Top+'px' }">
+                <div class="panel-heading">
+                    <button type="button" class="btn btn-default btn-xs pull-right btnRemove" ng-click="removeNote(item.ID);">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <textarea ng-model="item.Text" class="editableArea" rows="3" ng-focus="gotFocus($index);" ng-blur="lostFocus(item);" ng-keyup="keyup($event);" on-finish-render-textarea></textarea>
+                </div>                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

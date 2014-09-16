@@ -1,0 +1,58 @@
+﻿html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    padding-bottom: 52px;
+    box-sizing: border-box;
+    background: #0D686B;
+}
+
+.movableBox {
+    padding-right: 0px;
+    padding-left: 0px;
+    position: absolute;
+    width: 300px;
+    min-height: 60px;
+    min-width: 100px;
+}
+
+.movableBox.panel {
+    margin-bottom: 0px;
+}
+
+.movableBox .panel-heading {
+    padding: 1px;
+    cursor: move;
+}
+
+.movableBox .panel-body {
+    min-height: 50px;
+    height: 100%;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.navbar {
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+
+.mainContainer .row {
+    margin: 0px;
+    height: 100%;
+}
+
+.mainContainer {
+    height: 100%;
+}
+
+.editableArea {
+    outline: none;
+    border: none;
+    width: 100%;
+    overflow-y: hidden;
+}
