@@ -485,7 +485,7 @@ namespace RealTimeSticky.Controllers
                 bool success = TryWriteWebConfig();
                 if (!success)
                 {
-                    throw new Exception("mobx.mobi needs to be restarted due to a configuration change, but was unable to do so." + Environment.NewLine +
+                    throw new Exception("Application needs to be restarted due to a configuration change, but was unable to do so." + Environment.NewLine +
                         "To prevent this issue in the future, a change to the web server configuration is required:" + Environment.NewLine +
                         "- run the application in a full trust environment, or" + Environment.NewLine +
                         "- give the application write access to the 'web.config' file.");
@@ -494,7 +494,7 @@ namespace RealTimeSticky.Controllers
                 success = TryWriteGlobalAsax();
                 if (!success)
                 {
-                    throw new Exception("mobx.mobi needs to be restarted due to a configuration change, but was unable to do so." + Environment.NewLine +
+                    throw new Exception("Application needs to be restarted due to a configuration change, but was unable to do so." + Environment.NewLine +
                         "To prevent this issue in the future, a change to the web server configuration is required:" + Environment.NewLine +
                         "- run the application in a full trust environment, or" + Environment.NewLine +
                         "- give the application write access to the 'Global.asax' file.");
