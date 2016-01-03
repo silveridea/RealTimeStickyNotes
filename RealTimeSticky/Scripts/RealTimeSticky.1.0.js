@@ -8,6 +8,7 @@
         var connect = function ()
         {
             //Getting the connection object
+            //connection = $.hubConnection("/RealTimeStickyDemo/signalr", { useDefaultPath: false });
             connection = $.hubConnection();
 
             //Creating proxy
